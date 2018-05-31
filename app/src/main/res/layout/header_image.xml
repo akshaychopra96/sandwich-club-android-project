@@ -13,17 +13,4 @@
         android:contentDescription="@string/sandwich_picture_content_description"
         android:scaleType="centerCrop" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ExpandableListView
-            android:id="@+id/expandableListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:groupIndicator="@drawable/expandable_list_arrow_selector">
-
-        </ExpandableListView>
-    </FrameLayout>
 </LinearLayout>
