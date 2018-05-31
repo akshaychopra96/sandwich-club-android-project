@@ -3,7 +3,6 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -15,15 +14,13 @@ import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /*
-*Please NOTE: I am resubmitting this project. Therefore, I have created a new Layout
-* from scratch. The XML file for new layout is activity_detail_revised.
+ *Please NOTE: I am resubmitting this project. Therefore, I have created a new Layout
+ * from scratch. The XML file for new layout is activity_detail_revised.
  */
 
 public class DetailActivity extends AppCompatActivity {
@@ -36,15 +33,18 @@ public class DetailActivity extends AppCompatActivity {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
-    TextView alsoKnownTV,originTV,descriptionTV,ingredientsTV;
+    TextView alsoKnownTV, originTV, descriptionTV, ingredientsTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_revised);
 
-        ImageView ingredientsIv = getLayoutInflater().inflate(R.layout.header_image,null).findViewById(R.id.image_iv2);
+        final ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        View header = getLayoutInflater().inflate(R.layout.header_image, null);
+        expandableListView.addHeaderView(header);
 
+        ImageView ingredientsIv = expandableListView.findViewById(R.id.image_iv2);
         Intent intent = getIntent();
         if (intent == null) {
             closeOnError();
@@ -69,17 +69,16 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
-
         populateUI(sandwich);
 
-        expandableListView = findViewById(R.id.expandableListView);
-        expandableListView.addHeaderView(getLayoutInflater().inflate(R.layout.header_image,null));
+        //expandableListView = findViewById(R.id.expandableListView);
+        //expandableListView.addHeaderView(getLayoutInflater().inflate(R.layout.header_image,null));
 
         //New updated Library of Picasso has been used
         Picasso.get()
                 .load(sandwich.getImage())
                 .placeholder(R.drawable.ic_broken_image)
-                .error(R.drawable.ic_broken_image)
+                .error(R.drawable.image_not_found)
                 .into(ingredientsIv);
 
         setTitle(sandwich.getMainName());
@@ -115,20 +114,20 @@ public class DetailActivity extends AppCompatActivity {
 
         //Preparing List and adding it in HashMap data structure (i.e. List Data of child )
 
-            ArrayList<String> alsoKnownAsList = (ArrayList<String>) sandwich.getAlsoKnownAs();
-            listDataChild.put(listDataHeader.get(0), alsoKnownAsList);
+        ArrayList<String> alsoKnownAsList = (ArrayList<String>) sandwich.getAlsoKnownAs();
+        listDataChild.put(listDataHeader.get(0), alsoKnownAsList);
 
         List<String> originList = new ArrayList<>();
         originList.add(sandwich.getPlaceOfOrigin());
-        listDataChild.put(listDataHeader.get(1),originList);
+        listDataChild.put(listDataHeader.get(1), originList);
 
 
         List<String> descriptionList = new ArrayList<>();
         descriptionList.add(sandwich.getDescription());
-        listDataChild.put(listDataHeader.get(2),descriptionList);
+        listDataChild.put(listDataHeader.get(2), descriptionList);
 
 
-            ArrayList<String> ingredientsList = (ArrayList<String>) sandwich.getIngredients();
-            listDataChild.put(listDataHeader.get(3), ingredientsList);
+        ArrayList<String> ingredientsList = (ArrayList<String>) sandwich.getIngredients();
+        listDataChild.put(listDataHeader.get(3), ingredientsList);
     }
 }
