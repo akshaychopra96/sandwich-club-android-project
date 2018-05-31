@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.udacity.sandwichclub.DetailActivity">
+
+    <ImageView
+        android:id="@+id/image_iv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/sandwich_picture_content_description"
+        android:scaleType="centerCrop"
+        android:layout_margin="16dp"
+        />
+
+
+    <TextView
+        android:id="@+id/label_also_know_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_also_known_as_label"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:lineSpacingExtra="2dp"
+        android:layout_below="@id/image_iv"
+
+        />
+
+
+    <TextView
+        android:id="@+id/also_known_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/label_also_know_tv"
+        android:layout_below="@id/image_iv"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        style="@style/display_textview"
+        />
+
+    <TextView
+        android:id="@+id/label_ingredients_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_ingredients_label"
+        android:textStyle="bold"
+        android:layout_below="@id/description_tv"
+        android:padding="8dp"
+
+        />
+
+    <TextView
+        android:id="@+id/ingredients_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/label_ingredients_tv"
+        android:layout_below="@id/description_tv"
+        android:layout_alignParentRight="true"
+        style="@style/display_textview"
+        />
+
+
+    <TextView
+        android:id="@+id/label_origin_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_place_of_origin_label"
+        android:textStyle="bold"
+        android:layout_below="@id/also_known_tv"
+        android:padding="8dp"
+        />
+
+    <TextView
+        android:id="@+id/origin_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/label_origin_tv"
+        android:layout_below="@id/also_known_tv"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/label_origin_tv"
+        style="@style/display_textview"
+
+        />
+
+
+    <TextView
+        android:id="@+id/description_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/label_description_tv"
+        android:layout_below="@id/origin_tv"
+        android:layout_alignParentRight="true"
+        style="@style/display_textview"
+        />
+
+
+    <TextView
+        android:id="@+id/label_description_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_description_label"
+        android:textStyle="bold"
+        android:layout_below="@id/origin_tv"
+        android:padding="8dp"
+
+        />
+
+
+
+</RelativeLayout>
+</ScrollView>
