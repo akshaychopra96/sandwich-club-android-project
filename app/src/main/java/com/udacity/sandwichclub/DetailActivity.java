@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -44,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_revised);
 
-        ImageView ingredientsIv = findViewById(R.id.image_iv2);
+        ImageView ingredientsIv = getLayoutInflater().inflate(R.layout.header_image,null).findViewById(R.id.image_iv2);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -69,7 +68,12 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
+
+
         populateUI(sandwich);
+
+        expandableListView = findViewById(R.id.expandableListView);
+        expandableListView.addHeaderView(getLayoutInflater().inflate(R.layout.header_image,null));
 
         //New updated Library of Picasso has been used
         Picasso.get()
@@ -80,60 +84,14 @@ public class DetailActivity extends AppCompatActivity {
 
         setTitle(sandwich.getMainName());
 
-        expandableListView = findViewById(R.id.expandableListView);
 
         expandableListAdapter = new ExpandableListViewAdapter(this, listDataHeader, listDataChild);
 
         // setting list adapter
         expandableListView.setAdapter(expandableListAdapter);
 
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                setListViewHeight(parent, groupPosition);
-                return false;
-            }
-        });
-
 
     }
-
-    private void setListViewHeight(ExpandableListView listView,
-                                   int group) {
-        ExpandableListAdapter listAdapter =  listView.getExpandableListAdapter();
-        int totalHeight = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(),
-                View.MeasureSpec.EXACTLY);
-        for (int i = 0; i < listAdapter.getGroupCount(); i++) {
-            View groupItem = listAdapter.getGroupView(i, false, null, listView);
-            groupItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-
-            totalHeight += groupItem.getMeasuredHeight();
-
-            if (((listView.isGroupExpanded(i)) && (i != group))
-                    || ((!listView.isGroupExpanded(i)) && (i == group))) {
-                for (int j = 0; j < listAdapter.getChildrenCount(i); j++) {
-                    View listItem = listAdapter.getChildView(i, j, false, null,
-                            listView);
-                    listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-
-                    totalHeight += listItem.getMeasuredHeight();
-
-                }
-            }
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        int height = totalHeight
-                + (listView.getDividerHeight() * (listAdapter.getGroupCount() - 1));
-        if (height < 10)
-            height = 200;
-        params.height = height;
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-
-    }
-
 
     private void closeOnError() {
         finish();
@@ -157,14 +115,8 @@ public class DetailActivity extends AppCompatActivity {
 
         //Preparing List and adding it in HashMap data structure (i.e. List Data of child )
 
-        if(sandwich.getAlsoKnownAs().isEmpty()){
-       //Not able to get what to write here
-        }
-
-        else {
             ArrayList<String> alsoKnownAsList = (ArrayList<String>) sandwich.getAlsoKnownAs();
             listDataChild.put(listDataHeader.get(0), alsoKnownAsList);
-        }
 
         List<String> originList = new ArrayList<>();
         originList.add(sandwich.getPlaceOfOrigin());
@@ -176,13 +128,7 @@ public class DetailActivity extends AppCompatActivity {
         listDataChild.put(listDataHeader.get(2),descriptionList);
 
 
-        if(sandwich.getIngredients().isEmpty()){
-        //Not able to get what to write here
-        }
-        else {
-
             ArrayList<String> ingredientsList = (ArrayList<String>) sandwich.getIngredients();
             listDataChild.put(listDataHeader.get(3), ingredientsList);
-        }
     }
 }
