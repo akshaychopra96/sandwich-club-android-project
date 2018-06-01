@@ -77,7 +77,7 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.get()
                 .load(sandwich.getImage())
                 .placeholder(R.drawable.ic_broken_image)
-                .error(R.drawable.ic_broken_image)
+                .error(R.drawable.image_not_found)
                 .into(ingredientsIv);
 
         setTitle(sandwich.getMainName());
@@ -98,11 +98,6 @@ public class DetailActivity extends AppCompatActivity {
 
     private void populateUI(Sandwich sandwich) {
 
-        alsoKnownTV = findViewById(R.id.also_known_tv);
-        originTV = findViewById(R.id.origin_tv);
-        descriptionTV = findViewById(R.id.description_tv);
-        ingredientsTV = findViewById(R.id.ingredients_tv);
-
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
@@ -120,25 +115,12 @@ public class DetailActivity extends AppCompatActivity {
         if(alsoKnownAsList.isEmpty()){
             alsoKnownAsList.add("No Info Available");
             listDataChild.put(listDataHeader.get(0), alsoKnownAsList);
-            Log.d("tag","Inside isEmpty, item added");
         }
 
         else
             listDataChild.put(listDataHeader.get(0), alsoKnownAsList);
 
-
-        for (int i = 0; i <alsoKnownAsList.size() ; i++) {
-            Log.d("tag",""+alsoKnownAsList.get(i));
-
-        }
-
-
         List<String> originList = new ArrayList<>();
-
-        if(originList.isEmpty()){
-            originList.add("No Info Available");
-        }
-
         originList.add(sandwich.getPlaceOfOrigin());
         listDataChild.put(listDataHeader.get(1), originList);
 
