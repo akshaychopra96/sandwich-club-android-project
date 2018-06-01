@@ -3,6 +3,7 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -29,9 +30,10 @@ public class DetailActivity extends AppCompatActivity {
     private static final int DEFAULT_POSITION = -1;
 
     ExpandableListAdapter expandableListAdapter;
-    ExpandableListView expandableListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+
+    ArrayList<String> alsoKnownAsList;
 
     TextView alsoKnownTV, originTV, descriptionTV, ingredientsTV;
 
@@ -71,14 +73,11 @@ public class DetailActivity extends AppCompatActivity {
 
         populateUI(sandwich);
 
-        //expandableListView = findViewById(R.id.expandableListView);
-        //expandableListView.addHeaderView(getLayoutInflater().inflate(R.layout.header_image,null));
-
         //New updated Library of Picasso has been used
         Picasso.get()
                 .load(sandwich.getImage())
                 .placeholder(R.drawable.ic_broken_image)
-                .error(R.drawable.image_not_found)
+                .error(R.drawable.ic_broken_image)
                 .into(ingredientsIv);
 
         setTitle(sandwich.getMainName());
@@ -107,17 +106,39 @@ public class DetailActivity extends AppCompatActivity {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
+        listDataChild.clear();
+        listDataHeader.clear();
+
         listDataHeader.add("Also Known As");
         listDataHeader.add("Place of Origin");
         listDataHeader.add("Description");
         listDataHeader.add("Ingredients");
 
-        //Preparing List and adding it in HashMap data structure (i.e. List Data of child )
+        alsoKnownAsList = (ArrayList<String>) sandwich.getAlsoKnownAs();
 
-        ArrayList<String> alsoKnownAsList = (ArrayList<String>) sandwich.getAlsoKnownAs();
-        listDataChild.put(listDataHeader.get(0), alsoKnownAsList);
+
+        if(alsoKnownAsList.isEmpty()){
+            alsoKnownAsList.add("No Info Available");
+            listDataChild.put(listDataHeader.get(0), alsoKnownAsList);
+            Log.d("tag","Inside isEmpty, item added");
+        }
+
+        else
+            listDataChild.put(listDataHeader.get(0), alsoKnownAsList);
+
+
+        for (int i = 0; i <alsoKnownAsList.size() ; i++) {
+            Log.d("tag",""+alsoKnownAsList.get(i));
+
+        }
+
 
         List<String> originList = new ArrayList<>();
+
+        if(originList.isEmpty()){
+            originList.add("No Info Available");
+        }
+
         originList.add(sandwich.getPlaceOfOrigin());
         listDataChild.put(listDataHeader.get(1), originList);
 

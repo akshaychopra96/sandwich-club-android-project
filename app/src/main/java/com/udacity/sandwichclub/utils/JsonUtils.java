@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class JsonUtils {
 
-  static ArrayList<String> alsoKnownAsList = new ArrayList<>();
-  static ArrayList<String> ingredientsList = new ArrayList<>();
+    static ArrayList<String> alsoKnownAsList;
+    static ArrayList<String> ingredientsList;
 
     public static Sandwich parseSandwichJson(String json) {
 
@@ -37,22 +37,22 @@ public class JsonUtils {
             String mainName = nameObject.getString(KEY_MAIN_NAME);
 
             JSONArray alsoKnownAsArray = nameObject.getJSONArray(KEY_ALSO_KNOW_AS);
-
-                //Extracting items from JSONArray and adding it to the alsoKnownAs List
-                for (int i = 0; i < alsoKnownAsArray.length(); i++) {
-                    alsoKnownAsList.add(alsoKnownAsArray.getString(i));
-                }
+            alsoKnownAsList = new ArrayList<>();
+            //Extracting items from JSONArray and adding it to the alsoKnownAs List
+            for (int i = 0; i < alsoKnownAsArray.length(); i++) {
+                alsoKnownAsList.add(alsoKnownAsArray.getString(i));
+            }
 
             String placeOfOrigin = jsonObject.getString(KEY_PLACE_OF_ORIGIN);
             String description = jsonObject.getString(KEY_DESCRIPTION);
             String imageUrl = jsonObject.getString(KEY_IMAGE);
 
             JSONArray ingredientsArray = jsonObject.getJSONArray(KEY_INGREDIENTS);
-
-                //Extracting items from JSONArray and adding it to the Ingredients List
-                for (int i = 0; i < ingredientsArray.length(); i++) {
-                    ingredientsList.add(ingredientsArray.getString(i));
-                }
+            ingredientsList = new ArrayList<>();
+            //Extracting items from JSONArray and adding it to the Ingredients List
+            for (int i = 0; i < ingredientsArray.length(); i++) {
+                ingredientsList.add(ingredientsArray.getString(i));
+            }
             //Making a new object of Sandwich class and passing the appropriate parameters in the constructor
             sandwich = new Sandwich(mainName,alsoKnownAsList,placeOfOrigin,description,imageUrl,ingredientsList);
 
